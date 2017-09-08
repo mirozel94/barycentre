@@ -23,4 +23,4 @@ long = long.fdiv(i)
 Launchy.open( "http://www.latlong.net/c/?lat=#{lat}&long=#{long}" )
 end
 
-return_bar_coordinates
+

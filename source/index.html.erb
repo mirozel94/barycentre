@@ -1,15 +1,53 @@
 ---
-title: Le Wagon - Middleman
+title: Barry Centre
 ---
 
-<div id="home">
-  <div class="home-content">
-    <%= image_tag "logo.png", width: "200" %>
-    <p>
-      Middleman is now running!
-    </p>
-    <p class="about">
-      <%= link_to "More about this template", "about.html" %>
-    </p>
+<div class="container">
+<h2>Display a barycentre</h2>
+<form>
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="form-group">
+      <input type="address" class="form-control special" placeholder="Enter address">
+    </div>
   </div>
 </div>
+  <div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="form-group">
+      <input type="address" class="form-control special2" placeholder="Enter address">
+    </div>
+  </div>
+</div>
+  <button type="submit" class="btn btn-info">Add an address</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+
+  <script>
+
+    var flat_address = $('.special').get(0);
+    var flat_address_2 = $('.special2').get(0);
+
+
+    if (flat_address) {
+      var autocomplete = new google.maps.places.Autocomplete(flat_address, { types: ['geocode'] });
+      google.maps.event.addDomListener(flat_address, 'keydown', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault(); // Do not submit the form on Enter.
+        }
+      });
+    }
+
+    if (flat_address_2) {
+      var autocomplete = new google.maps.places.Autocomplete(flat_address_2, { types: ['geocode'] });
+      google.maps.event.addDomListener(flat_address_2, 'keydown', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault(); // Do not submit the form on Enter.
+        }
+      });
+    }
+
+
+  </script>
