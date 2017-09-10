@@ -2,52 +2,68 @@
 title: Barry Centre
 ---
 
-<div class="container">
-<h2>Display a barycentre</h2>
-<form>
+<h2 class="text-center">Display a barycentre</h2>
+<div class="main-container">
+<div class="form-container">
+<form id="main-form">
 <div class="row">
   <div class="col-xs-12 col-sm-4">
     <div class="form-group">
-      <input type="address" class="form-control special" placeholder="Enter address">
+      <input type="text" class="form-control special" placeholder="Enter address">
     </div>
   </div>
 </div>
-  <div class="row">
+<div class="row">
   <div class="col-xs-12 col-sm-4">
     <div class="form-group">
-      <input type="address" class="form-control special2" placeholder="Enter address">
+      <input type="text" class="form-control special" placeholder="Enter address">
     </div>
   </div>
 </div>
-  <button type="submit" class="btn btn-info">Add an address</button>
-  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+  <button type="submit" class="btn btn-default" id="field-generator">Add an address</button>
 
 </div>
+<div class="map-container">
+  <p>Google maps will soon be here</p>
+</div>
+</div>
 
-  <script>
+<script>
 
-    var flat_address = $('.special').get(0);
-    var flat_address_2 = $('.special2').get(0);
+var address = document.getElementsByClassName('special');
+const generator = document.getElementById("field-generator");
+const form = document.getElementById("main-form");
+const item = `<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="form-group">
+      <input type="text" class="form-control special" placeholder="Enter address">
+    </div>
+  </div>
+</div>`;
+generator.addEventListener("click", (event) => {
+  form.insertAdjacentHTML("beforeend", item);
+  event.preventDefault();
+  autoSearch();
+});
+
+function autoSearch() {
+
+for(var i=0; i< 10; i++){
+
+  if (address[i]) {
+    var autocomplete = new google.maps.places.Autocomplete(address[i], { types: ['geocode'] });
+    google.maps.event.addDomListener(address[i], 'keydown', function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault(); // Do not submit the form on Enter.
+      }
+    });
+  }
+}
+}
+
+autoSearch();
 
 
-    if (flat_address) {
-      var autocomplete = new google.maps.places.Autocomplete(flat_address, { types: ['geocode'] });
-      google.maps.event.addDomListener(flat_address, 'keydown', function(e) {
-        if (e.keyCode == 13) {
-          e.preventDefault(); // Do not submit the form on Enter.
-        }
-      });
-    }
+</script>
 
-    if (flat_address_2) {
-      var autocomplete = new google.maps.places.Autocomplete(flat_address_2, { types: ['geocode'] });
-      google.maps.event.addDomListener(flat_address_2, 'keydown', function(e) {
-        if (e.keyCode == 13) {
-          e.preventDefault(); // Do not submit the form on Enter.
-        }
-      });
-    }
-
-
-  </script>

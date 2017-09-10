@@ -15,3 +15,16 @@
     font-size: 16px;
   }
 }
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 15px 0 15px;
+}
+.form-control {
+  width: auto;
+}
+.map-container {
+  flex: 1 0 67%;
+  border: 1px dotted black;
+  margin-left: 15px;
+}
