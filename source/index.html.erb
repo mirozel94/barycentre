@@ -24,9 +24,11 @@ title: Barry Centre
   <button type="submit" class="btn btn-default" id="field-generator">Add an address</button>
 
 </div>
-<div class="map-container">
-  <p>Google maps will soon be here</p>
-</div>
+  <div class="map-container">
+    <div style='width: 800px;'>
+      <div id="map" style='width: 800px; height: 400px;'></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -64,6 +66,23 @@ for(var i=0; i< 10; i++){
 
 autoSearch();
 
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat": 0,
+      "lng": 0,
+      "picture": {
+        "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
+        "width":  32,
+        "height": 32
+      },
+      "infowindow": "hello!"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+});
 
 </script>
 

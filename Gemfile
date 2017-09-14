@@ -11,10 +11,11 @@ gem 'font-awesome-middleman'
 gem 'bootstrap-sass'
 gem 'jquery-middleman'
 gem 'launchy'
-gem "coffee-rails"
-gem "gmaps4rails"
+gem 'gmaps4rails'
+gem 'coffee-rails'
 
 source 'https://rails-assets.org' do
-  gem "rails-assets-underscore"
+  gem 'rails-assets-underscore'
 end
+
 
