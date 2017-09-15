@@ -25,14 +25,15 @@ title: Barry Centre
 
 </div>
   <div class="map-container">
-    <div style='width: 800px;'>
-      <div id="map" style='width: 800px; height: 400px;'></div>
+    <div style='width: 1000px'>
+      <div id="map" style='width: 1000px; height: 500px;'></div>
     </div>
   </div>
 </div>
 
 <script>
 
+var geocoder = new google.maps.Geocoder();
 var address = document.getElementsByClassName('special');
 const generator = document.getElementById("field-generator");
 const form = document.getElementById("main-form");
@@ -51,38 +52,43 @@ generator.addEventListener("click", (event) => {
 
 function autoSearch() {
 
-for(var i=0; i< 10; i++){
+  for(var i=0; i< 10; i++){
 
-  if (address[i]) {
-    var autocomplete = new google.maps.places.Autocomplete(address[i], { types: ['geocode'] });
-    google.maps.event.addDomListener(address[i], 'keydown', function(e) {
-      if (e.keyCode == 13) {
-        e.preventDefault(); // Do not submit the form on Enter.
-      }
-    });
+    if (address[i]) {
+      var autocomplete = new google.maps.places.Autocomplete(address[i], { types: ['geocode'] });
+      google.maps.event.addDomListener(address[i], 'keydown', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault(); // Do not submit the form on Enter.
+        }
+      });
+    }
   }
-}
 }
 
 autoSearch();
 
 handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers([
-    {
-      "lat": 0,
-      "lng": 0,
-      "picture": {
-        "url": "http://people.mozilla.com/~faaborg/files/shiretoko/firefoxIcon/firefox-32.png",
-        "width":  32,
-        "height": 32
-      },
-      "infowindow": "hello!"
-    }
+    { lat: 43, lng: 3.5, "infowindow": "hello!"},
+    { lat: 45, lng: 4, "infowindow": "hello!"}
   ]);
   handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
 });
 
-</script>
+// function codeAddress() {
+//   geocoder.geocode( { 'address': ${address[0].value}}, function(results, status) {
+//     if (status == 'OK') {
+//       map.setCenter(results[0].geometry.location);
+//       var marker = new google.maps.Marker({
+//           map: map,
+//           position: results[0].geometry.location
+//       });
+//     } else {
+//       alert('Geocode was not successful for the following reason: ' + status);
+//     }
+//   });
+// }
 
+</script>
