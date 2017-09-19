@@ -22,6 +22,7 @@ title: Barry Centre
 </div>
 </form>
   <button type="submit" class="btn btn-default" id="field-generator">Add an address</button>
+  <button type="submit" class="btn btn-primary" id="map-calculator">Calculate</button>
 
 </div>
   <div class="map-container">
@@ -36,6 +37,7 @@ title: Barry Centre
 var geocoder = new google.maps.Geocoder();
 var address = document.getElementsByClassName('special');
 const generator = document.getElementById("field-generator");
+const calculator = document.getElementById("map-calculator");
 const form = document.getElementById("main-form");
 const item = `<div class="row">
   <div class="col-xs-12 col-sm-4">
@@ -69,26 +71,30 @@ autoSearch();
 
 handler = Gmaps.build('Google');
 handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    { lat: 43, lng: 3.5, "infowindow": "hello!"},
-    { lat: 45, lng: 4, "infowindow": "hello!"}
-  ]);
-  handler.bounds.extendWith(markers);
   handler.fitMapToBounds();
 });
 
-// function codeAddress() {
-//   geocoder.geocode( { 'address': ${address[0].value}}, function(results, status) {
-//     if (status == 'OK') {
-//       map.setCenter(results[0].geometry.location);
-//       var marker = new google.maps.Marker({
-//           map: map,
-//           position: results[0].geometry.location
-//       });
-//     } else {
-//       alert('Geocode was not successful for the following reason: ' + status);
-//     }
-//   });
-// }
+calculator.addEventListener("click", (event) => {
+  console.log(address[0].value);
+});
+
+
 
 </script>
+
+
+<!--
+function codeAddress() {
+  geocoder.geocode( { 'address': ${address[0].value}}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+ -->
