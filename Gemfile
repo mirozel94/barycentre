@@ -12,6 +12,7 @@ gem 'bootstrap-sass'
 gem 'jquery-middleman'
 gem 'launchy'
 gem 'gmaps4rails'
+gem 'geocoder'
 gem 'coffee-rails'
 
 source 'https://rails-assets.org' do
