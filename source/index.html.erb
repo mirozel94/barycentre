@@ -35,6 +35,8 @@ title: Barry Centre
 <script>
 
 var geocoder = new google.maps.Geocoder();
+var latbar = 0;
+var lngbar = 0;
 var address = document.getElementsByClassName('special');
 const generator = document.getElementById("field-generator");
 const calculator = document.getElementById("map-calculator");
@@ -47,14 +49,18 @@ const item = `<div class="row">
   </div>
 </div>`;
 generator.addEventListener("click", (event) => {
-  form.insertAdjacentHTML("beforeend", item);
-  event.preventDefault();
-  autoSearch();
+  if (address.length < 8) {
+    form.insertAdjacentHTML("beforeend", item);
+    event.preventDefault();
+    autoSearch();
+  } else {
+    alert("Sorry, no more than 8 addresses may be displayed!");
+  }
 });
 
 function autoSearch() {
 
-  for(var i=0; i< 10; i++){
+  for(var i=0; i< 8; i++){
 
     if (address[i]) {
       var autocomplete = new google.maps.places.Autocomplete(address[i], { types: ['geocode'] });
@@ -74,10 +80,11 @@ handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
   handler.fitMapToBounds();
 });
 
-
 calculator.addEventListener("click", (event) => {
-  for(var i=0; i< 10; i++){
+  for(var i=0; i< address.length; i++){
     geocoder.geocode( { "address": address[i].value }, function(results, status) {
+      latbar += results[0].geometry.location.lat();
+      lngbar += results[0].geometry.location.lng();
       markers = handler.addMarkers([
         {"lat": results[0].geometry.location.lat(),
          "lng": results[0].geometry.location.lng()
@@ -85,11 +92,13 @@ calculator.addEventListener("click", (event) => {
       ]);
     });
   }
+  bary = handler.addMarker([
+    {"lat": 0,
+     "lng": 0
+    }
+  ]);
 });
-
 
 </script>
 
-
 <!-- {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} -->
-
