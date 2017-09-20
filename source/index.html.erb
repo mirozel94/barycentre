@@ -74,27 +74,22 @@ handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
   handler.fitMapToBounds();
 });
 
-calculator.addEventListener("click", (event) => {
-  console.log(address[0].value);
-});
 
+calculator.addEventListener("click", (event) => {
+  for(var i=0; i< 10; i++){
+    geocoder.geocode( { "address": address[i].value }, function(results, status) {
+      markers = handler.addMarkers([
+        {"lat": results[0].geometry.location.lat(),
+         "lng": results[0].geometry.location.lng()
+        }
+      ]);
+    });
+  }
+});
 
 
 </script>
 
 
-<!--
-function codeAddress() {
-  geocoder.geocode( { 'address': ${address[0].value}}, function(results, status) {
-    if (status == 'OK') {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
- -->
+<!-- {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} -->
+
