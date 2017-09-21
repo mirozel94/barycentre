@@ -81,7 +81,7 @@ handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
 });
 
 calculator.addEventListener("click", (event) => {
-  for(var i=0; i< address.length; i++){
+  for(var i=0; i< address.length; i++) {
     geocoder.geocode( { "address": address[i].value }, function(results, status) {
       latbar += results[0].geometry.location.lat();
       lngbar += results[0].geometry.location.lng();
@@ -90,14 +90,23 @@ calculator.addEventListener("click", (event) => {
          "lng": results[0].geometry.location.lng()
         }
       ]);
+      if (i == (address.length - 1)) {
+        bary = handler.addMarkers([
+          {"lat": latbar/(i+1),
+           "lng": lngbar/(i+1)
+          }
+        ]);
+      };
     });
   }
-  bary = handler.addMarker([
-    {"lat": 0,
-     "lng": 0
-    }
-  ]);
 });
+
+  // console.log(latbar);
+  // bary = handler.addMarkers([
+  //   {"lat": `${latbar}`,
+  //    "lng": `${lngbar}`
+  //   }
+  // ]);
 
 </script>
 
