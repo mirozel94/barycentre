@@ -53,6 +53,7 @@ generator.addEventListener("click", (event) => {
     form.insertAdjacentHTML("beforeend", item);
     event.preventDefault();
     autoSearch();
+    addMarker(address.length - 1);
   } else {
     alert("Sorry, no more than 8 addresses may be displayed!");
   }
@@ -80,34 +81,43 @@ handler.buildMap({ provider: {zoom: 2}, internal: {id: 'map'}}, function(){
   handler.fitMapToBounds();
 });
 
-calculator.addEventListener("click", (event) => {
+function addMarker(n) {
+  address[n].addEventListener("change", (event) => {
+    geocoder.geocode( { "address": address[n].value }, function(results, status) {
+      markers = handler.addMarkers([
+        {"lat": results[0].geometry.location.lat(),
+         "lng": results[0].geometry.location.lng(),
+         "infowindow": address[n].value
+        }
+      ]);
+    });
+  });
+}
+
+addMarker(0);
+addMarker(1);
+
+function barycentre() {
+  bary = {}
   for(var i=0; i< address.length; i++) {
     geocoder.geocode( { "address": address[i].value }, function(results, status) {
       latbar += results[0].geometry.location.lat();
       lngbar += results[0].geometry.location.lng();
-      markers = handler.addMarkers([
-        {"lat": results[0].geometry.location.lat(),
-         "lng": results[0].geometry.location.lng()
-        }
-      ]);
-      if (i == (address.length - 1)) {
-        bary = handler.addMarkers([
-          {"lat": latbar/(i+1),
-           "lng": lngbar/(i+1)
-          }
-        ]);
-      };
     });
   }
+      bary["lat"] = latbar;
+      bary["lng"] = lngbar;
+      return bary;
+}
+
+
+calculator.addEventListener("click", (event) => {
+  barycentre()
+  baryk = handler.addMarkers([
+    {"lat": bary["lat"]/(address.length),
+     "lng": bary["lng"]/(address.length)
+    }
+  ]);
 });
 
-  // console.log(latbar);
-  // bary = handler.addMarkers([
-  //   {"lat": `${latbar}`,
-  //    "lng": `${lngbar}`
-  //   }
-  // ]);
-
 </script>
-
-<!-- {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} -->
