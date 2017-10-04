@@ -32,6 +32,27 @@ title: Barry Centre
   </div>
 </div>
 
+<!-- Begin MailChimp Signup Form -->
+<link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//acasi.us16.list-manage.com/subscribe/post?u=25180ff3aadd6f6f47b8d0b9f&amp;id=5933f41259" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <label for="mce-EMAIL">Subscribe to our mailing list</label>
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_25180ff3aadd6f6f47b8d0b9f_5933f41259" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    </div>
+</form>
+</div>
+
+<!--End mc_embed_signup-->
+
 <script>
 
 var geocoder = new google.maps.Geocoder();
@@ -98,26 +119,25 @@ addMarker(0);
 addMarker(1);
 
 function barycentre() {
-  bary = {}
+  array = [0, 0];
   for(var i=0; i< address.length; i++) {
     geocoder.geocode( { "address": address[i].value }, function(results, status) {
-      latbar += results[0].geometry.location.lat();
-      lngbar += results[0].geometry.location.lng();
+      array[0] += results[0].geometry.location.lat();
+      array[1] += results[0].geometry.location.lng();
+      if (i == address.length - 1) {
+        bary = handler.addMarkers([
+          {"lat": array[0]/(i+1),
+           "lng": array[1]/(i+1)
+          }
+        ]);
+      }
     });
   }
-      bary["lat"] = latbar;
-      bary["lng"] = lngbar;
-      return bary;
 }
 
 
 calculator.addEventListener("click", (event) => {
   barycentre()
-  baryk = handler.addMarkers([
-    {"lat": bary["lat"]/(address.length),
-     "lng": bary["lng"]/(address.length)
-    }
-  ]);
 });
 
 </script>
